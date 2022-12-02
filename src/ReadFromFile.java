@@ -39,7 +39,7 @@ public class ReadFromFile {
     private void readFile(File file) {
         try {
             Scanner readFile = new Scanner(file);
-            List<Node> nodes = new ArrayList<>();
+            List<Node> fileNodes = new ArrayList<>();
 
             String line;
             String[] s;
@@ -94,15 +94,15 @@ public class ReadFromFile {
                         float x = Float.parseFloat(s[1].trim());
                         float y = Float.parseFloat(s[2].trim());
                         Node node = new Node(x, y);
-                        nodes.add(node);
+                        fileNodes.add(node);
 
 
                     }
-                    grid.setND(nodes);
+                    grid.setND(fileNodes);
                 }
                 if (line.contains("*Element, type=DC2D4")) {
 
-                    List<element> elements = new ArrayList<>();
+                    List<Element> elements = new ArrayList<>();
                     for (int i = 0; i < grid.nEl; i++) {
                         line = readFile.nextLine();
                         s = line.split(",");
@@ -111,9 +111,17 @@ public class ReadFromFile {
                         ID.add(Integer.parseInt(s[2].trim()));
                         ID.add(Integer.parseInt(s[3].trim()));
                         ID.add(Integer.parseInt(s[4].trim()));
-                        elements.add(new element(ID));
+                        elements.add(new Element(ID));
+                        for (int j = 0; j < 4; j++) {
+                            elements.get(i).nodes.add(fileNodes.get((elements.get(i).ID.get(j))-1));
+                            //dla listy elementow, wez element i, wez liste wezlow i dodaj do niej:
+                            // z listy nodes powyzej ktore odczytalismy, wez node o indeksie:
+                            //z listy elements wez element o indeksie 'i' i wez z listy ID nr j
+                        }
+                        grid.EL.add(elements.get(i));
                     }
-                    grid.setEL(elements);
+                    //grid.setEL(elements);
+
                 }
                 if (line.contains("*BC")) {
                     line = readFile.nextLine();
@@ -121,8 +129,7 @@ public class ReadFromFile {
                     List<Integer> BC = new ArrayList<>();
                     for (int i = 0; i < s.length; i++) {
 
-                        Node node = grid.ND.get(Integer.parseInt(s[i].trim()) - 1);
-                        node.setBC(true);
+                        grid.ND.get(Integer.parseInt(s[i].trim()) - 1).setBC(true);
                     }
                 }
             }
@@ -148,7 +155,7 @@ public class ReadFromFile {
         for (Node node : ND) {
             System.out.println(node.toString());
         }
-        for (element element : grid.getEL()) {
+        for (Element element : grid.getEL()) {
             System.out.println(element.toString());
         }
     }

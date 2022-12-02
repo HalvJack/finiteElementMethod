@@ -5,12 +5,12 @@ public class Grid {
     int nEl; // liczba elementow
     int nNd; //liczba wezlow
     List<Node> ND = new ArrayList<>();// tablica node'ow tj. wezlow
-    List<element> EL = new ArrayList<>(); //tablica elementów
+    List<Element> EL = new ArrayList<>(); //tablica elementów
 
     public Grid() {
     }
 
-    public Grid(int nEl, int nNd, List<Node> ND, List<element> EL) {
+    public Grid(int nEl, int nNd, List<Node> ND, List<Element> EL) {
         this.nEl = nEl;
         this.nNd = nNd;
         this.ND = ND;
@@ -41,11 +41,11 @@ public class Grid {
         this.ND = ND;
     }
 
-    public List<element> getEL() {
+    public List<Element> getEL() {
         return EL;
     }
 
-    public void setEL(List<element> EL) {
+    public void setEL(List<Element> EL) {
         this.EL = EL;
     }
 }

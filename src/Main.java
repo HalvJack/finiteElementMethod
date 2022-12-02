@@ -13,9 +13,10 @@ public class Main {
         GlobalData globalData = new GlobalData();
         globalData = readFromFile.globalData;
         grid = readFromFile.grid;
-        /*for (:
-             ) {
-            
+        /*for(int i = 0; i < grid.nEl; i++){
+            for (int j = 0; j < grid.EL.get(0).nodes.size(); j++) {
+                System.out.println(grid.EL.get(i).nodes.get(j));
+            }
         }*/
 
     }
