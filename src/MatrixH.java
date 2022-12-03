@@ -5,8 +5,14 @@ import java.util.function.Function;
 import static java.lang.Math.sqrt;
 
 public class MatrixH {
-    double[] x = {0, 0.025, 0.025, 0};
-    double[] y = {0, 0, 0.025, 0.025};
+    public MatrixH(double[] x, double[] y) {
+        this.x = x;
+        this.y = y;
+    }
+    double[] x = new double[4];
+    double[] y = new double[4];
+    //double[] x = {0, 0.025, 0.025, 0};
+    //double[] y = {0, 0, 0.025, 0.025};
     double[] eta2 = {-1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)};
     double[] ksi2 = {-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3)}; // ksi to E
     double[] eta3 = {-sqrt(3.0 / 5), -sqrt(3.0 / 5), -sqrt(3.0 / 5), 0, 0, 0, sqrt(3.0 / 5), sqrt(3.0 / 5), sqrt(3.0 / 5)};
