@@ -5,14 +5,19 @@ import java.util.function.Function;
 import static java.lang.Math.sqrt;
 
 public class MatrixH {
-    public MatrixH(double[] x, double[] y) {
+    public MatrixH(double[] x, double[] y, double conductivity) {
         this.x = x;
         this.y = y;
+        this.conductivity = conductivity;
     }
     double[] x = new double[4];
     double[] y = new double[4];
+    double conductivity;
+    //double[] x = {-2, 5, 5, -2};
+    //double[] y = {1, 1, -10,-10};
     //double[] x = {0, 0.025, 0.025, 0};
     //double[] y = {0, 0, 0.025, 0.025};
+    //double conductivity = 25; // SLAJD 15 OBLICZENIE MACIERZY H, TAKA JEST ZALOZONA TEMPERATURA
     double[] eta2 = {-1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)};
     double[] ksi2 = {-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3)}; // ksi to E
     double[] eta3 = {-sqrt(3.0 / 5), -sqrt(3.0 / 5), -sqrt(3.0 / 5), 0, 0, 0, sqrt(3.0 / 5), sqrt(3.0 / 5), sqrt(3.0 / 5)};
@@ -38,7 +43,6 @@ public class MatrixH {
             add(aDouble -> 0.25 * (-aDouble - 1));
         }
     };
-    double temperature = 30; // SLAJD 15 OBLICZENIE MACIERZY H, TAKA JEST ZALOZONA TEMPERATURA
 
     private double[] calculate1DivideByDet(double matrix[][]) {
         double[] array = new double[matrix.length];
@@ -60,12 +64,12 @@ public class MatrixH {
                 table[i][j] = myFunctionsEta.get(j).apply(eta[i]);
             }
         }
-        for (int i = 0; i < size; i++) {
+        /*for (int i = 0; i < size; i++) {
             for (int i1 = 0; i1 < 4; i1++) {
                 System.out.print(table[i][i1] + " || ");
             }
             System.out.println();
-        }
+        }*/
         return table;
     }
 
@@ -80,12 +84,12 @@ public class MatrixH {
                 table[i][j] = myFunctionsKsi.get(j).apply(ksi[i]);
             }
         }
-        for (int i = 0; i < size; i++) {
+        /*for (int i = 0; i < size; i++) {
             for (int i1 = 0; i1 < 4; i1++) {
                 System.out.print(table[i][i1] + " || ");
             }
             System.out.println();
-        }
+        }*/
         return table;
     }
 
@@ -125,7 +129,7 @@ public class MatrixH {
         return matrixH;
     }
 
-    public void calculateMatrixH(int points) {
+    public double[][] calculateMatrixH(int points) {
         int size = points * points;
         double[][] tableEta = new double[size][4];
         double[][] tableKsi = new double[size][4];
@@ -153,10 +157,10 @@ public class MatrixH {
             for (int j = 0; j < 4; j++) {
                 tableDx[i][j] = matrixFirst[i][0] * tableEta[i][j] + matrixFirst[i][1] * tableKsi[i][j]; //slajd 13, tabelka z dx
                 tableDy[i][j] = matrixFirst[i][1] * tableEta[i][j] + matrixFirst[i][0] * tableKsi[i][j]; //slajd 13, tabelka z dy
-                System.out.print(i + " " + j + " " + tableDx[i][j]);
-                System.out.print(i + " " + j + " " + tableDy[i][j]);
+               // System.out.print(i + " " + j + " " + tableDx[i][j]);
+                //System.out.print(i + " " + j + " " + tableDy[i][j]);
             }
-            System.out.println();
+            //System.out.println();
         }
         double[] detJ = new double[size];
         for (int i = 0; i < size; i++) {
@@ -166,16 +170,17 @@ public class MatrixH {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
-                    matricesH[i][j][k] = temperature * (tableDx[i][j] * tableDx[i][k] + tableDy[i][j] * tableDy[i][k]) * detJ[i];
-                    System.out.print(matricesH[i][j][k] + " ");
+                    matricesH[i][j][k] = conductivity * (tableDx[i][j] * tableDx[i][k] + tableDy[i][j] * tableDy[i][k]) * detJ[i];
+                   // System.out.print(matricesH[i][j][k] + " ");
                 }
-                System.out.println();
+                //System.out.println();
             }
-            System.out.println();
+            //System.out.println();
         }
         double[][] macierzH = new double[4][4];
 
         macierzH = showMatrixH(points, matricesH);
+        return macierzH;
     }
 }
 
