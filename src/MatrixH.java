@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 import static java.lang.Math.sqrt;
 
-public class MatrixH {
+public class MatrixH implements MatrixMES {
     public MatrixH(double[] x, double[] y, double conductivity) {
         this.x = x;
         this.y = y;
@@ -43,6 +43,7 @@ public class MatrixH {
             add(aDouble -> 0.25 * (-aDouble - 1));
         }
     };
+
 
     private double[] calculate1DivideByDet(double matrix[][]) {
         double[] array = new double[matrix.length];
