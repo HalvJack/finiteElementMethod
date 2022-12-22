@@ -19,11 +19,14 @@ public class Aggregation {
 
     public double[][] createListOfHMatrices() {
         double[][] matrixHList = new double[4][4];
+
         double[] x = new double[4];
         double[] y = new double[4];
+        double[] m = new double [4];
+        double[] n = new double [4];
             for (int j = 0; j < 4; j++) {
-                x[j] = grid.getEL().get(0).getNodes().get(j).getX();
-                y[j] = grid.getEL().get(0).getNodes().get(j).getY();
+                x[j] = grid.getEL().get(5).getNodes().get(j).getX();
+                y[j] = grid.getEL().get(5).getNodes().get(j).getY();
                 System.out.println(j + " " + x[j]);
                 System.out.println(j + " " + y[j]);
             }

@@ -117,6 +117,7 @@ public class ReadFromFile {
                             //dla listy elementow, wez element i, wez liste wezlow i dodaj do niej:
                             // z listy nodes powyzej ktore odczytalismy, wez node o indeksie:
                             //z listy elements wez element o indeksie 'i' i wez z listy ID nr j
+                            elements.get(i).setSides();
                         }
                         grid.EL.add(elements.get(i));
                     }

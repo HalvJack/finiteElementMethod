@@ -4,29 +4,12 @@ import java.util.function.Function;
 
 import static java.lang.Math.sqrt;
 
-public class MatrixH implements MatrixMES {
+public class MatrixH extends MatrixMES {
     public MatrixH(double[] x, double[] y, double conductivity) {
         this.x = x;
         this.y = y;
         this.conductivity = conductivity;
     }
-    double[] x = new double[4];
-    double[] y = new double[4];
-    double conductivity;
-    //double[] x = {-2, 5, 5, -2};
-    //double[] y = {1, 1, -10,-10};
-    //double[] x = {0, 0.025, 0.025, 0};
-    //double[] y = {0, 0, 0.025, 0.025};
-    //double conductivity = 25; // SLAJD 15 OBLICZENIE MACIERZY H, TAKA JEST ZALOZONA TEMPERATURA
-    double[] eta2 = {-1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)};
-    double[] ksi2 = {-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3)}; // ksi to E
-    double[] eta3 = {-sqrt(3.0 / 5), -sqrt(3.0 / 5), -sqrt(3.0 / 5), 0, 0, 0, sqrt(3.0 / 5), sqrt(3.0 / 5), sqrt(3.0 / 5)};
-    double[] ksi3 = {-sqrt(3.0 / 5), 0, sqrt(3.0 / 5), -sqrt(3.0 / 5), 0, sqrt(3.0 / 5), -sqrt(3.0 / 5), 0, sqrt(3.0 / 5)};
-    double[] eta4 = {-0.861136, -0.861136, -0.861136, -0.861136, -0.339981, -0.339981, -0.339981, -0.339981, 0.339981, 0.339981, 0.339981, 0.339981, 0.861136, 0.861136, 0.861136, 0.861136};
-    double[] ksi4 = {-0.861136, -0.339981, 0.339981, 0.861136, -0.861136, -0.339981, 0.339981, 0.861136, -0.861136, -0.339981, 0.339981, 0.861136, -0.861136, -0.339981, 0.339981, 0.861136};
-    double[] wages2 = {1.0, 1.0};
-    double[] wages3 = {5.0 / 9.0, 8.0 / 9.0, 5.0 / 9.0};
-    double[] wages4 = {0.347855, 0.652145, 0.652145, 0.347855};
     List<Function<Double, Double>> myFunctionsKsi = new ArrayList<>() { // ksi, ma byc tablica ksi
         {
             add(aDouble -> 0.25 * (aDouble - 1));
@@ -45,14 +28,14 @@ public class MatrixH implements MatrixMES {
     };
 
 
-    private double[] calculate1DivideByDet(double matrix[][]) {
+    /*private double[] calculate1DivideByDet(double matrix[][]) {
         double[] array = new double[matrix.length];
         for (int i = 0; i < array.length; i++) {
             array[i] = 1 / (matrix[i][0] * matrix[i][3]);
             //System.out.println(array[i]);
         }
         return array;
-    }
+    }*/
 
     private double[][] showTableEta(int size) { // nazwa tabeli, ale to tabelka z dn1/dE ( E to ksi )
         double[][] table = new double[size][4];
