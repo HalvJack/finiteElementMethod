@@ -3,7 +3,7 @@ import static java.lang.Math.sqrt;
 public abstract class MatrixMES {
     double[] x = new double[4];
     double[] y = new double[4];
-    double conductivity = 0;
+    double alfa = 0;
 
     double[] eta2 = {-1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)};
     double[] ksi2 = {-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3)}; // ksi to E

@@ -2,13 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static java.lang.Math.sqrt;
-
 public class MatrixH extends MatrixMES {
     public MatrixH(double[] x, double[] y, double conductivity) {
         this.x = x;
         this.y = y;
-        this.conductivity = conductivity;
+        this.alfa = conductivity;
     }
     List<Function<Double, Double>> myFunctionsKsi = new ArrayList<>() { // ksi, ma byc tablica ksi
         {
@@ -28,7 +26,7 @@ public class MatrixH extends MatrixMES {
     };
 
 
-    /*private double[] calculate1DivideByDet(double matrix[][]) {
+    /*private double[] calculate1DivideByDet(double matrix[][]) {e
         double[] array = new double[matrix.length];
         for (int i = 0; i < array.length; i++) {
             array[i] = 1 / (matrix[i][0] * matrix[i][3]);
@@ -154,7 +152,7 @@ public class MatrixH extends MatrixMES {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
-                    matricesH[i][j][k] = conductivity * (tableDx[i][j] * tableDx[i][k] + tableDy[i][j] * tableDy[i][k]) * detJ[i];
+                    matricesH[i][j][k] = alfa * (tableDx[i][j] * tableDx[i][k] + tableDy[i][j] * tableDy[i][k]) * detJ[i];
                    // System.out.print(matricesH[i][j][k] + " ");
                 }
                 //System.out.println();
@@ -164,6 +162,7 @@ public class MatrixH extends MatrixMES {
         double[][] macierzH = new double[4][4];
 
         macierzH = showMatrixH(points, matricesH);
+
         return macierzH;
     }
 }

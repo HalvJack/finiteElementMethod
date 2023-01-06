@@ -11,6 +11,19 @@ public class GlobalData {
     public GlobalData() {
     }
 
+    @Override
+    public String toString() {
+        return "GlobalData{" +
+                "SimulationTime=" + SimulationTime +
+                ", SimulationStepTime=" + SimulationStepTime +
+                ", Conductivity=" + Conductivity +
+                ", Alfa=" + Alfa +
+                ", Tot=" + Tot +
+                ", InitialTemp=" + InitialTemp +
+                ", Density=" + Density +
+                ", SpecificHeat=" + SpecificHeat +
+                '}';
+    }
 
     public int getSimulationTime() {
         return SimulationTime;

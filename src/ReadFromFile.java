@@ -31,9 +31,6 @@ public class ReadFromFile {
             throw new InputMismatchException("That's not a number");
 //            System.err.println("Error");
         }
-        System.out.println("Apka dziala");
-
-
     }
 
     private void readFile(File file) {
@@ -117,8 +114,8 @@ public class ReadFromFile {
                             //dla listy elementow, wez element i, wez liste wezlow i dodaj do niej:
                             // z listy nodes powyzej ktore odczytalismy, wez node o indeksie:
                             //z listy elements wez element o indeksie 'i' i wez z listy ID nr j
-                            elements.get(i).setSides();
                         }
+
                         grid.EL.add(elements.get(i));
                     }
                     //grid.setEL(elements);
@@ -129,12 +126,16 @@ public class ReadFromFile {
                     s = line.split(",");
                     List<Integer> BC = new ArrayList<>();
                     for (int i = 0; i < s.length; i++) {
-
                         grid.ND.get(Integer.parseInt(s[i].trim()) - 1).setBC(true);
                     }
+
                 }
+
             }
             readFile.close();
+            for (int i = 0; i < grid.getnEl(); i++) {
+                grid.getEL().get(i).setSides();
+            }
         } catch (FileNotFoundException e) {
             System.out.println("An error occured");
             e.printStackTrace();
