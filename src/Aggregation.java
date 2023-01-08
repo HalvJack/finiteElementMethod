@@ -25,8 +25,6 @@ public class Aggregation {
         for (int i = 0; i < 9; i++) {
             double[] x = new double[4];
             double[] y = new double[4];
-            double[] m = new double[4];
-            double[] n = new double[4];
             for (int j = 0; j < 4; j++) {
                 x[j] = grid.getEL().get(i).getNodes().get(j).getX();
                 y[j] = grid.getEL().get(i).getNodes().get(j).getY();
@@ -41,21 +39,82 @@ public class Aggregation {
                 }
             }
         }
+        //writeHMatrices(matrixHList);
         return matrixHList;
     }
 
-    public void AggregatedGlobalMatrixH(double[][][] matrixHList, double[][][] matrixHBCList, double[][] vectorPList) {
+    private void writeHMatrices(double matrixHList[][][]) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
-                    aggregatedVectorP[grid.getEL().get(i).getID().get(j) - 1] += vectorPList[i][k];
+                    System.out.print(matrixHList[i][j][k] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+
+    }
+
+    public void AggregatedGlobalMatrixH(double[][][] matrixHList, double[][][] matrixHBCList, double[][] vectorPList) {
+        //writeH(matrixHList);
+        writeVectorPList(vectorPList);
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                aggregatedVectorP[grid.getEL().get(i).getID().get(j) - 1] += vectorPList[i][j];
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
                     matrixHList[i][j][k] += matrixHBCList[i][j][k];
                     aggregatedMatrix[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += matrixHList[i][j][k];
                 }
             }
         }
+        writeHBC(matrixHBCList);
         writeAggregatedMatrix(aggregatedMatrix);
-        writeVectorP(aggregatedVectorP);
+         writeVectorP(aggregatedVectorP);
+        //writeAggregatedHplusHBC(matrixHList);
+        double[] x = new double[aggregatedVectorP.length];
+        x = GaussianElimination.lsolve(aggregatedMatrix, aggregatedVectorP);
+        for (int i = 0; i < x.length; i++) {
+            System.out.print(x[i] + " ");
+        }
+
+    }
+    private void writeVectorPList(double vectorPList[][]){
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(vectorPList[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    private void writeH(double matrixHList[][][]) {
+        for (int i = 0; i < 9; i++) {
+            System.out.println("Element " + i + 1);
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
+                    System.out.print(matrixHList[i][j][k] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
+
+    private void writeHBC(double matrixHBCList[][][]) {
+        for (int i = 0; i < 9; i++) {
+            System.out.println("Element " + i + 1);
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
+                    System.out.print(matrixHBCList[i][j][k] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
     }
 
     private void writeVectorP(double[] aggregatedVectorP) {
@@ -74,5 +133,18 @@ public class Aggregation {
             System.out.println();
         }
 
+    }
+
+    private void writeAggregatedHplusHBC(double matrixHList[][][]) {
+        for (int i = 0; i < 9; i++) {
+            System.out.println("Element " + i + 1);
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
+                    System.out.print(matrixHList[i][j][k] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
     }
 }

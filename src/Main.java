@@ -28,6 +28,7 @@ public class Main {
         }
         Aggregation aggragatedMatrix = new Aggregation(grid, globalData);
         double[][][] myListOfMatricesH = aggragatedMatrix.createListOfHMatrices();
+        System.out.println("Po macierzy H");
         aggragatedMatrix.AggregatedGlobalMatrixH(myListOfMatricesH, matrixHBCList, vectorPList);
     }
 }

@@ -46,44 +46,81 @@ public class MatrixHBC extends MatrixMES {
 
     public double[][] showTableOneSide(int points, int whichSide) {
         double[][] table = new double[points][4];
-        for (int i = 0; i < points; i++) {
+        if (whichSide == 0) {
+            if (points == 2) {
+                table[0][0] = myShapeFunctions.get(0).apply(ksi2[1], eta2[0]);
+                table[0][1] = myShapeFunctions.get(1).apply(ksi2[2], eta2[0]);
+                table[1][0] = myShapeFunctions.get(0).apply(ksi2[2], eta2[0]);
+                table[1][1] = myShapeFunctions.get(1).apply(ksi2[1], eta2[0]);
+
+            }
+        }
+        if (whichSide == 1) {
+            if (points == 2) {
+                table[0][1] = myShapeFunctions.get(1).apply(ksi2[3], eta2[1]);
+                table[0][2] = myShapeFunctions.get(2).apply(ksi2[3], eta2[2]);
+                table[1][1] = myShapeFunctions.get(1).apply(ksi2[3], eta2[2]);
+                table[1][2] = myShapeFunctions.get(2).apply(ksi2[3], eta2[1]);
+
+            }
+        }
+        if (whichSide == 2) {
+            if (points == 2) {
+                table[0][2] = myShapeFunctions.get(2).apply(ksi2[1], eta2[3]);
+                table[0][3] = myShapeFunctions.get(3).apply(ksi2[2], eta2[3]);
+                table[1][2] = myShapeFunctions.get(2).apply(ksi2[2], eta2[3]);
+                table[1][3] = myShapeFunctions.get(3).apply(ksi2[1], eta2[3]);
+
+            }
+
+        }
+        if (whichSide == 3) {
+            if (points == 2) {
+                table[0][3] = myShapeFunctions.get(3).apply(ksi2[0], eta2[1]);
+                table[0][0] = myShapeFunctions.get(0).apply(ksi2[0], eta2[2]);
+                table[1][3] = myShapeFunctions.get(3).apply(ksi2[0], eta2[2]);
+                table[1][0] = myShapeFunctions.get(0).apply(ksi2[0], eta2[1]);
+
+            }
+        }
+        /*for (int i = 0; i < points; i++) {
             if (whichSide == 0) {
-                if (points == 2) table[i][0] = myShapeFunctions.get(0).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][0] = myShapeFunctions.get(0).apply(ksi2[1], eta2[0]);
                 if (points == 3) table[i][0] = myShapeFunctions.get(0).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][0] = myShapeFunctions.get(0).apply(eta4[i], ksi4[i]);
 
-                if (points == 2) table[i][1] = myShapeFunctions.get(0).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][1] = myShapeFunctions.get(0).apply(ksi2[2], eta2[0]);
                 if (points == 3) table[i][1] = myShapeFunctions.get(0).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][1] = myShapeFunctions.get(0).apply(eta4[i], ksi4[i]);
             }
             if (whichSide == 1) {
-                if (points == 2) table[i][1] = myShapeFunctions.get(1).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][1] = myShapeFunctions.get(1).apply(ksi2[3], eta2[1]);
                 if (points == 3) table[i][1] = myShapeFunctions.get(1).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][1] = myShapeFunctions.get(1).apply(eta4[i], ksi4[i]);
 
-                if (points == 2) table[i][2] = myShapeFunctions.get(1).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][2] = myShapeFunctions.get(1).apply(ksi2[3], eta2[2]);
                 if (points == 3) table[i][2] = myShapeFunctions.get(1).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][2] = myShapeFunctions.get(1).apply(eta4[i], ksi4[i]);
             }
             if (whichSide == 2) {
-                if (points == 2) table[i][2] = myShapeFunctions.get(2).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][2] = myShapeFunctions.get(2).apply(ksi2[1], eta2[3]);
                 if (points == 3) table[i][2] = myShapeFunctions.get(2).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][2] = myShapeFunctions.get(2).apply(eta4[i], ksi4[i]);
 
-                if (points == 2) table[i][3] = myShapeFunctions.get(2).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][3] = myShapeFunctions.get(2).apply(ksi2[2], eta2[3]);
                 if (points == 3) table[i][3] = myShapeFunctions.get(2).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][3] = myShapeFunctions.get(2).apply(eta4[i], ksi4[i]);
             }
             if (whichSide == 3) {
-                if (points == 2) table[i][0] = myShapeFunctions.get(3).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][0] = myShapeFunctions.get(3).apply(ksi2[0], eta2[1]);
                 if (points == 3) table[i][0] = myShapeFunctions.get(3).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][0] = myShapeFunctions.get(3).apply(eta4[i], ksi4[i]);
 
-                if (points == 2) table[i][3] = myShapeFunctions.get(3).apply(eta2[i], ksi2[i]);
+                if (points == 2) table[i][3] = myShapeFunctions.get(3).apply(ksi2[0], eta2[2]);
                 if (points == 3) table[i][3] = myShapeFunctions.get(3).apply(eta3[i], ksi3[i]);
                 if (points == 4) table[i][3] = myShapeFunctions.get(3).apply(eta4[i], ksi4[i]);
             }
-        }
+        }*/
         System.out.println("Which side: " + whichSide);
         for (int i = 0; i < points; i++) {
             for (int j = 0; j < 4; j++) {
@@ -105,7 +142,7 @@ public class MatrixHBC extends MatrixMES {
                 detJ = calculateDetJ(element.getSides().get(i).getNodeA(), element.getSides().get(i).getNodeB());
                 for (int j = 0; j < 4; j++) {
                     if (points == 2) {
-                        vectorP[i][j] += alfa * detJ * tot * (wages2[0] * tableKsiEta[0][j] +
+                        vectorP[i][j] = alfa * detJ * tot * (wages2[0] * tableKsiEta[0][j] +
                                 wages2[1] * tableKsiEta[1][j]);
                     }
                     if (points == 3) {
@@ -147,8 +184,6 @@ public class MatrixHBC extends MatrixMES {
         for (int i = 0; i < element.getSides().size(); i++) {
             if (element.getSides().get(i).isSideBorderCondition()) {
                 double[][] tableKsiEta = new double[points][4];
-                double[][] firstByDet = new double[points][4];
-                //firstByDet = calculate1DivideByDet();
                 tableKsiEta = showTableOneSide(points, i);
                 double detJ;
                 detJ = calculateDetJ(element.getSides().get(i).getNodeA(), element.getSides().get(i).getNodeB());
@@ -156,14 +191,14 @@ public class MatrixHBC extends MatrixMES {
                 for (int m = 0; m < 4; m++) {
                     for (int j = 0; j < 4; j++) {
                         if (points == 2)
-                            listOfSideMatrix[i][m][j] = detJ * tot * (wages2[0] * tableKsiEta[0][m] * tableKsiEta[0][j] +
+                            listOfSideMatrix[i][m][j] = detJ * alfa * (wages2[0] * tableKsiEta[0][m] * tableKsiEta[0][j] +
                                     wages2[1] * tableKsiEta[1][m] * tableKsiEta[1][j]);
                         if (points == 3)
-                            listOfSideMatrix[i][m][j] = detJ * tot * (wages3[0] * tableKsiEta[0][m] * tableKsiEta[0][j] +
+                            listOfSideMatrix[i][m][j] = detJ * alfa * (wages3[0] * tableKsiEta[0][m] * tableKsiEta[0][j] +
                                     wages3[1] * tableKsiEta[1][m] * tableKsiEta[1][j] +
                                     wages3[2] * tableKsiEta[2][m] * tableKsiEta[2][j]);
                         if (points == 4)
-                            listOfSideMatrix[i][m][j] = detJ * tot * (wages4[0] * tableKsiEta[0][m] * tableKsiEta[0][j] +
+                            listOfSideMatrix[i][m][j] = detJ * alfa * (wages4[0] * tableKsiEta[0][m] * tableKsiEta[0][j] +
                                     wages4[1] * tableKsiEta[1][m] * tableKsiEta[1][j] +
                                     wages4[2] * tableKsiEta[2][m] * tableKsiEta[2][j] +
                                     wages4[3] * tableKsiEta[3][m] * tableKsiEta[3][j]);
@@ -206,7 +241,7 @@ public class MatrixHBC extends MatrixMES {
 
     //funkcja obliczająca jakobian z prezentacji generacja macierzy hbc, długość wektora,odcinka o koncach w dwoch node'ach
     public double calculateDetJ(Node node1, Node node2) {
-        return sqrt(pow(node1.getX() - node2.getX(), 2) + pow(node1.getY() - node2.getY(), 2));
+        return sqrt(pow(node1.getX() - node2.getX(), 2) + pow(node1.getY() - node2.getY(), 2)) / 2.0;
     }
 
 
