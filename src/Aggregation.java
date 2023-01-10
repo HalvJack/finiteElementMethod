@@ -1,9 +1,6 @@
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Aggregation {
-    List<Double[][]> listOfMatricesH = new ArrayList<>();
     Grid grid;
     GlobalData globalData;
     double[][] aggregatedMatrix;
@@ -14,9 +11,6 @@ public class Aggregation {
         this.globalData = globalData;
         aggregatedMatrix = new double[grid.getnNd()][grid.getnNd()];
         aggregatedVectorP = new double[grid.getnNd()];
-    }
-
-    public Aggregation() {
     }
 
     public double[][][] createListOfHMatrices() {
@@ -42,6 +36,41 @@ public class Aggregation {
         //writeHMatrices(matrixHList);
         return matrixHList;
     }
+    public double[][][] createListOfMatricesC(){;
+        double[][][] matrixCList = new double[9][4][4];
+        double[][] matrixCpom = new double[4][4];
+        for (int i = 0; i < 9; i++) {
+            double[] x = new double[4];
+            double[] y = new double[4];
+            for (int j = 0; j < 4; j++) {
+                x[j] = grid.getEL().get(i).getNodes().get(j).getX();
+                y[j] = grid.getEL().get(i).getNodes().get(j).getY();
+                System.out.println(j + " " + x[j]);
+                System.out.println(j + " " + y[j]);
+            }
+            MatrixC matrixC = new MatrixC(x, y);
+            matrixCpom = matrixC.calculateMatrixC(2);
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
+                    matrixCList[i][j][k] = matrixCpom[j][k];
+                }
+            }
+        }
+        writeCMatrices(matrixCList);
+        return matrixCList;
+    }
+
+    private void writeCMatrices(double[][][] matrixCList) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
+                    System.out.print(matrixCList[i][j][k] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
 
     private void writeHMatrices(double matrixHList[][][]) {
         for (int i = 0; i < 9; i++) {
@@ -56,7 +85,7 @@ public class Aggregation {
 
     }
 
-    public void AggregatedGlobalMatrixH(double[][][] matrixHList, double[][][] matrixHBCList, double[][] vectorPList) {
+    public void AggregatedGlobalMatrixH(double[][][] matrixHList, double[][][] matrixHBCList, double[][] vectorPList, double[][][] myLIstOfMatricesC) {
         //writeH(matrixHList);
         writeVectorPList(vectorPList);
         for (int i = 0; i < 9; i++) {
@@ -67,15 +96,15 @@ public class Aggregation {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
-                    matrixHList[i][j][k] += matrixHBCList[i][j][k];
+                    matrixHList[i][j][k] += matrixHBCList[i][j][k] + myLIstOfMatricesC[i][j][k];
                     aggregatedMatrix[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += matrixHList[i][j][k];
                 }
             }
         }
         writeHBC(matrixHBCList);
         writeAggregatedMatrix(aggregatedMatrix);
-         writeVectorP(aggregatedVectorP);
-        //writeAggregatedHplusHBC(matrixHList);
+        writeVectorP(aggregatedVectorP);
+        writeAggregatedHplusHBC(matrixHList);
         double[] x = new double[aggregatedVectorP.length];
         x = GaussianElimination.lsolve(aggregatedMatrix, aggregatedVectorP);
         for (int i = 0; i < x.length; i++) {
@@ -83,7 +112,8 @@ public class Aggregation {
         }
 
     }
-    private void writeVectorPList(double vectorPList[][]){
+
+    private void writeVectorPList(double vectorPList[][]) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 4; j++) {
                 System.out.print(vectorPList[i][j] + " ");
@@ -91,6 +121,7 @@ public class Aggregation {
             System.out.println();
         }
     }
+
     private void writeH(double matrixHList[][][]) {
         for (int i = 0; i < 9; i++) {
             System.out.println("Element " + i + 1);

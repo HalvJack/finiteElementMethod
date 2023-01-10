@@ -27,22 +27,9 @@ public class MatrixHBC extends MatrixMES {
     double[] eta; //wspol punktow calkowania
     //double[]
 
-    //function we will be integrate after
-    List<ShapeFunction<Double, Double, Double>> myShapeFunctions = new ArrayList<>() {
-        { // funkcje ksztaltu
-            add((ksi, eta) -> 0.25 * (1 - ksi) * (1 - eta));
-            add((ksi, eta) -> 0.25 * (1 + ksi) * (1 - eta));
-            add((ksi, eta) -> 0.25 * (1 + ksi) * (1 + eta));
-            add((ksi, eta) -> 0.25 * (1 - ksi) * (1 + eta));
-        }
-    };
 
-    /*ShapeFunction<Double,Double,Double> myShape = new ShapeFunction<Double, Double, Double>() {
-        @Override
-        public Double apply(Double ksi, Double eta) {
-            return 0.25 * (1 - ksi) * (1 - eta);
-        }
-    };*/
+
+
 
     public double[][] showTableOneSide(int points, int whichSide) {
         double[][] table = new double[points][4];

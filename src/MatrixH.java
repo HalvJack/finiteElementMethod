@@ -1,29 +1,10 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 public class MatrixH extends MatrixMES {
     public MatrixH(double[] x, double[] y, double conductivity) {
         this.x = x;
         this.y = y;
         this.alfa = conductivity;
     }
-    List<Function<Double, Double>> myFunctionsKsi = new ArrayList<>() { // ksi, ma byc tablica ksi
-        {
-            add(aDouble -> 0.25 * (aDouble - 1));
-            add(aDouble -> 0.25 * (-1 - aDouble));
-            add(aDouble -> 0.25 * (aDouble + 1));
-            add(aDouble -> 0.25 * (1 - aDouble));
-        }
-    };
-    List<Function<Double, Double>> myFunctionsEta = new ArrayList<>() { // Eta, w sensie tez ma byc tablica eta
-        {
-            add(aDouble -> 0.25 * (aDouble - 1));
-            add(aDouble -> 0.25 * (1 - aDouble));
-            add(aDouble -> 0.25 * (aDouble + 1));
-            add(aDouble -> 0.25 * (-aDouble - 1));
-        }
-    };
+
 
 
     /*private double[] calculate1DivideByDet(double matrix[][]) {e
@@ -34,46 +15,6 @@ public class MatrixH extends MatrixMES {
         }
         return array;
     }*/
-
-    private double[][] showTableEta(int size) { // nazwa tabeli, ale to tabelka z dn1/dE ( E to ksi )
-        double[][] table = new double[size][4];
-        double[] eta = new double[size];
-        if (size == 4) eta = eta2;
-        if (size == 9) eta = eta3;
-        if (size == 16) eta = eta4;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < 4; j++) {
-                table[i][j] = myFunctionsEta.get(j).apply(eta[i]);
-            }
-        }
-        /*for (int i = 0; i < size; i++) {
-            for (int i1 = 0; i1 < 4; i1++) {
-                System.out.print(table[i][i1] + " || ");
-            }
-            System.out.println();
-        }*/
-        return table;
-    }
-
-    private double[][] showTableKsi(int size) { // nazwa tabeli, ale to tabelka z dn1/dn ( n to eta )
-        double[][] table = new double[size][4];
-        double[] ksi = new double[size];
-        if (size == 4) ksi = ksi2;
-        if (size == 9) ksi = ksi3;
-        if (size == 16) ksi = ksi4;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < 4; j++) {
-                table[i][j] = myFunctionsKsi.get(j).apply(ksi[i]);
-            }
-        }
-        /*for (int i = 0; i < size; i++) {
-            for (int i1 = 0; i1 < 4; i1++) {
-                System.out.print(table[i][i1] + " || ");
-            }
-            System.out.println();
-        }*/
-        return table;
-    }
 
     private double[][] showMatrixH(int points, double matricesH[][][]) {
         double[][] matrixH = new double[4][4];
@@ -124,13 +65,13 @@ public class MatrixH extends MatrixMES {
             matrixFirst[i][2] = tableKsi[i][0] * x[0] + tableKsi[i][1] * x[1] + tableKsi[i][2] * x[2] + tableKsi[i][3] * x[3];
             matrixFirst[i][3] = tableKsi[i][0] * y[0] + tableKsi[i][1] * y[1] + tableKsi[i][2] * y[2] + tableKsi[i][3] * y[3];
         }
-        double[] firstByDet = new double[size];
-        firstByDet = calculate1DivideByDet(matrixFirst);
+        double[] detJ = new double[size];
+        detJ = calculateDetJ(matrixFirst);
         double[][] matrixPom = new double[size][4];
         matrixPom = matrixFirst;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 4; j++) {
-                matrixPom[i][j] *= firstByDet[i]; // ZGADZA SIE WYNOSI 80 0 0 80 kazda macierz wiec jest jak na slajdzie 12
+                matrixPom[i][j] *= (1/detJ[i]); // ZGADZA SIE WYNOSI 80 0 0 80 kazda macierz wiec jest jak na slajdzie 12
             }
         }
         double[][] tableDx = new double[size][4];
@@ -144,9 +85,9 @@ public class MatrixH extends MatrixMES {
             }
             //System.out.println();
         }
-        double[] detJ = new double[size];
+        double[] oneByDetJ = new double[size];
         for (int i = 0; i < size; i++) {
-            detJ[i] = 1 / firstByDet[i]; // TUTAJ DOLICZAM JESZCZE DETJ BO WYZEJ OD RAZU MIALEM POLICZONE 1/DETJ
+            oneByDetJ[i] = 1 / detJ[i]; // TUTAJ DOLICZAM JESZCZE DETJ BO WYZEJ OD RAZU MIALEM POLICZONE 1/DETJ
         }
         double[][][] matricesH = new double[size][4][4]; // MACIERZ H DLA 4 PUNKTOW CALKOWANIA
         for (int i = 0; i < size; i++) {
