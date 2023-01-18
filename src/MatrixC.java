@@ -1,7 +1,9 @@
 public class MatrixC extends MatrixMES {
-    public MatrixC(double[] x, double[] y) {
+    public MatrixC(double[] x, double[] y, double density, double specificHeat) {
         this.x = x;
         this.y = y;
+        this.density = density;
+        this.specificHeat = specificHeat;
     }
 
     public double[][] calculateMatrixC(int points) {
@@ -67,18 +69,18 @@ public class MatrixC extends MatrixMES {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (points == 2) {
-                    matrixC[i][j] += detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[1] *
+                    matrixC[i][j] += specificHeat * density * detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[1] *
                             wages[0] + matricesC[2][i][j] * wages[0] * wages[1] + matricesC[3][i][j] * wages[1] * wages[1]);
                 }
                 if (points == 3) {
-                    matrixC[i][j] += detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[0] * wages[1] +
+                    matrixC[i][j] += specificHeat * density * detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[0] * wages[1] +
                             matricesC[2][i][j] * wages[0] * wages[2] + matricesC[3][i][j] * wages[1] * wages[0] +
                             matricesC[4][i][j] * wages[1] * wages[1] + matricesC[5][i][j] * wages[1] * wages[2] +
                             matricesC[6][i][j] * wages[2] * wages[0] + matricesC[7][i][j] * wages[2] * wages[1] +
                             matricesC[8][i][j] * wages[2] * wages[2]);
                 }
                 if (points == 4) {
-                    matrixC[i][j] = detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[0] * wages[1] +
+                    matrixC[i][j] = specificHeat * density * detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[0] * wages[1] +
                             matricesC[2][i][j] * wages[0] * wages[2] + matricesC[3][i][j] * wages[0] * wages[3] +
                             matricesC[4][i][j] * wages[1] * wages[0] + matricesC[5][i][j] * wages[1] * wages[1] +
                             matricesC[6][i][j] * wages[1] * wages[2] + matricesC[7][i][j] * wages[1] * wages[3] +
@@ -111,7 +113,7 @@ public class MatrixC extends MatrixMES {
         }
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 4; j++) {
-                table[i][j] = myShapeFunctions.get(j).apply(ksi[j], eta[j]);
+                table[i][j] = myShapeFunctions.get(j).apply(ksi[i], eta[i]);
             }
         }
         return table;

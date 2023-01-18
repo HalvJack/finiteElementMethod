@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +13,6 @@ public class Main {
         double[][] matrixHBCpom = new double[4][4];
         double[][] vectorPList = new double[9][4];
         for (int i = 0; i < grid.nEl; i++) {
-            System.out.println("Which element " + i);
             MatrixHBC matrixHBC = new MatrixHBC(grid.getEL().get(i), globalData.getAlfa(), globalData.getTot());
             double[] vectorPPom = new double[4];
             vectorPPom = matrixHBC.calculateVectorP(2);

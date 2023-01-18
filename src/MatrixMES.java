@@ -8,7 +8,8 @@ public abstract class MatrixMES {
     double[] x = new double[4];
     double[] y = new double[4];
     double alfa = 0;
-
+    double density;
+    double specificHeat;
     double[] eta2 = {-1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)};
     double[] ksi2 = {-1 / sqrt(3), 1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3)}; // ksi to E
     double[] eta3 = {-sqrt(3.0 / 5), -sqrt(3.0 / 5), -sqrt(3.0 / 5), 0, 0, 0, sqrt(3.0 / 5), sqrt(3.0 / 5), sqrt(3.0 / 5)};

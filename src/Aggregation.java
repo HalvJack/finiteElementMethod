@@ -1,4 +1,5 @@
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
 public class Aggregation {
     Grid grid;
@@ -48,7 +49,7 @@ public class Aggregation {
                 System.out.println(j + " " + x[j]);
                 System.out.println(j + " " + y[j]);
             }
-            MatrixC matrixC = new MatrixC(x, y);
+            MatrixC matrixC = new MatrixC(x, y, globalData.getDensity(), globalData.getSpecificHeat());
             matrixCpom = matrixC.calculateMatrixC(2);
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
@@ -61,6 +62,7 @@ public class Aggregation {
     }
 
     private void writeCMatrices(double[][][] matrixCList) {
+        System.out.println("MATRICES C HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
@@ -86,8 +88,18 @@ public class Aggregation {
     }
 
     public void AggregatedGlobalMatrixH(double[][][] matrixHList, double[][][] matrixHBCList, double[][] vectorPList, double[][][] myLIstOfMatricesC) {
+        double[][] aggreagatedMatrixC = new double[16][16];
+        //double[][] matrixHplusHBC = new double[16][16];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
+                    aggreagatedMatrixC[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += myLIstOfMatricesC[i][j][k];
+                    //matrixHplusHBC[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += myLIstOfMatricesC[i][j][k] + matrixHBCList[i][j][k];
+                }
+            }
+        }
         //writeH(matrixHList);
-        writeVectorPList(vectorPList);
+        //writeVectorPList(vectorPList);
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 4; j++) {
                 aggregatedVectorP[grid.getEL().get(i).getID().get(j) - 1] += vectorPList[i][j];
@@ -101,16 +113,64 @@ public class Aggregation {
                 }
             }
         }
+
         writeHBC(matrixHBCList);
         writeAggregatedMatrix(aggregatedMatrix);
-        writeVectorP(aggregatedVectorP);
+        //writeVectorP(aggregatedVectorP);
         writeAggregatedHplusHBC(matrixHList);
-        double[] x = new double[aggregatedVectorP.length];
-        x = GaussianElimination.lsolve(aggregatedMatrix, aggregatedVectorP);
-        for (int i = 0; i < x.length; i++) {
-            System.out.print(x[i] + " ");
+        //double[] x = new double[aggregatedVectorP.length];
+        //x = GaussianElimination.lsolve(aggregatedMatrix, aggregatedVectorP);
+        //for (int i = 0; i < x.length; i++) {
+        //    System.out.print(x[i] + " ");
+       // }
+        writeAggregatedMatrixC(aggreagatedMatrixC);
+        for (int i = 0; i < grid.getnNd(); i++) {
+            for (int j = 0; j < grid.getnNd(); j++) {
+                aggregatedMatrix[i][j] += aggreagatedMatrixC[i][j] / globalData.getSimulationStepTime(); //borderConditionMatrix jako h plus hbc plus vector c dalem
+            }
         }
+        double[] globalVectorPCopy = Arrays.copyOf(aggregatedVectorP, aggregatedVectorP.length);
+        double[][] matrixHplusHBCCopy = new double[grid.getnNd()][grid.getnNd()];
+        for (int i = 0; i < grid.getnNd(); i++) {
+            for (int j = 0; j < grid.getnNd(); j++) {
+                matrixHplusHBCCopy[i][j] = aggregatedMatrix[i][j];
+            }
+        }
+        double[] temperatureVector = new double[grid.getnNd()];
+        for (int i = 0; i < grid.getnEl(); i++) {
+            temperatureVector[i] = globalData.getInitialTemp();
+        }
+        for (int i = 0; i < globalData.getSimulationTime(); i+= globalData.getSimulationStepTime()) {
+            for (int j = 0; j < grid.getnNd(); j++) {
+                for (int k = 0; k < grid.getnNd(); k++) {
+                    aggregatedVectorP[j] += aggreagatedMatrixC[j][k] / globalData.getSimulationTime() *temperatureVector[k];
+                }
+            }
+            temperatureVector = GaussianElimination.lsolve(aggregatedMatrix, aggregatedVectorP);
+            System.out.println(Arrays.stream(temperatureVector).min());
+            System.out.println(Arrays.stream(temperatureVector).max());
+            for (int j = 0; j < temperatureVector.length; j++) {
+                System.out.print(temperatureVector[j] + " ");
+            }
+            System.out.println();
+            aggregatedVectorP = Arrays.copyOf(globalVectorPCopy, globalVectorPCopy.length);
 
+            for (int m = 0; m < grid.getnNd(); m++) {
+                for (int j = 0; j < grid.getnNd(); j++) {
+                    aggregatedMatrix[m][j] = matrixHplusHBCCopy[m][j];
+                }
+            }
+        }
+    }
+
+    private void writeAggregatedMatrixC(double[][] aggreagatedMatrixC) {
+        System.out.println("MACIERZ C ZAGREAGOWANA!!!!!!");
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                System.out.print(aggreagatedMatrixC[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     private void writeVectorPList(double vectorPList[][]) {
