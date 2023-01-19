@@ -1,8 +1,10 @@
+import java.util.Arrays;
+
 public class MatrixH extends MatrixMES {
     public MatrixH(double[] x, double[] y, double conductivity) {
         this.x = x;
         this.y = y;
-        this.alfa = conductivity;
+        this.conductivity = conductivity;
     }
 
 
@@ -67,19 +69,19 @@ public class MatrixH extends MatrixMES {
         }
         double[] detJ = new double[size];
         detJ = calculateDetJ(matrixFirst);
-        double[][] matrixPom = new double[size][4];
-        matrixPom = matrixFirst;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < 4; j++) {
-                matrixPom[i][j] *= (1/detJ[i]); // ZGADZA SIE WYNOSI 80 0 0 80 kazda macierz wiec jest jak na slajdzie 12
-            }
+        double[][] matrixFirstReversedJakobian = new double[size][4];
+        for (int i = 0; i < matrixFirst.length; i++) {
+            matrixFirstReversedJakobian[i][0]=(1/detJ[i])*matrixFirst[i][3];
+            matrixFirstReversedJakobian[i][1]=(1/detJ[i])*(-matrixFirst[i][1]);
+            matrixFirstReversedJakobian[i][2]=(1/detJ[i])*(-matrixFirst[i][2]);
+            matrixFirstReversedJakobian[i][3]=(1/detJ[i])*matrixFirst[i][0];
         }
         double[][] tableDx = new double[size][4];
         double[][] tableDy = new double[size][4];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 4; j++) {
-                tableDx[i][j] = matrixFirst[i][0] * tableEta[i][j] + matrixFirst[i][1] * tableKsi[i][j]; //slajd 13, tabelka z dx
-                tableDy[i][j] = matrixFirst[i][1] * tableEta[i][j] + matrixFirst[i][0] * tableKsi[i][j]; //slajd 13, tabelka z dy
+                tableDx[i][j] = matrixFirstReversedJakobian[i][0] * tableEta[i][j] + matrixFirstReversedJakobian[i][1] * tableKsi[i][j]; //slajd 13, tabelka z dx
+                tableDy[i][j] = matrixFirstReversedJakobian[i][1] * tableEta[i][j] + matrixFirstReversedJakobian[i][0] * tableKsi[i][j]; //slajd 13, tabelka z dy
                // System.out.print(i + " " + j + " " + tableDx[i][j]);
                 //System.out.print(i + " " + j + " " + tableDy[i][j]);
             }
@@ -93,7 +95,7 @@ public class MatrixH extends MatrixMES {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
-                    matricesH[i][j][k] = alfa * (tableDx[i][j] * tableDx[i][k] + tableDy[i][j] * tableDy[i][k]) * detJ[i];
+                    matricesH[i][j][k] = conductivity * (tableDx[i][j] * tableDx[i][k] + tableDy[i][j] * tableDy[i][k]) * detJ[i];
                    // System.out.print(matricesH[i][j][k] + " ");
                 }
                 //System.out.println();

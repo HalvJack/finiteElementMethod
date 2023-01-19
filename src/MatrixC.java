@@ -12,7 +12,8 @@ public class MatrixC extends MatrixMES {
         double[] detJ = new double[size];
         detJ = calculateArrayUsefulToCalculateDetJ(points);
         tableKsiEta = showTableKsiEta(size);
-        return showMatrixC(points, tableKsiEta, detJ);
+        double[][] matrixC = showMatrixC(points, tableKsiEta, detJ);
+        return matrixC;
     }
 
     private double[] calculateArrayUsefulToCalculateDetJ(int points) {
@@ -44,9 +45,7 @@ public class MatrixC extends MatrixMES {
         for (int k = 0; k < size; k++) {
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 4; j++) {
-                    if (points == 2) {
-                        matricesC[k][i][j] = tableKsiEta[k][i] * tableKsiEta[k][j];
-                    }
+                    matricesC[k][i][j] = tableKsiEta[k][i] * tableKsiEta[k][j];
                 }
             }
         }
@@ -69,25 +68,38 @@ public class MatrixC extends MatrixMES {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (points == 2) {
-                    matrixC[i][j] += specificHeat * density * detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[1] *
-                            wages[0] + matricesC[2][i][j] * wages[0] * wages[1] + matricesC[3][i][j] * wages[1] * wages[1]);
+                    matrixC[i][j] += specificHeat * density * (detJ[0] * matricesC[0][i][j] * wages[0] * wages[0] +
+                            detJ[1] * matricesC[1][i][j] * wages[1] *
+                                    wages[0] + detJ[2] * matricesC[2][i][j] * wages[0] * wages[1] + detJ[3] *
+                            matricesC[3][i][j] * wages[1] * wages[1]);
                 }
                 if (points == 3) {
-                    matrixC[i][j] += specificHeat * density * detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[0] * wages[1] +
-                            matricesC[2][i][j] * wages[0] * wages[2] + matricesC[3][i][j] * wages[1] * wages[0] +
-                            matricesC[4][i][j] * wages[1] * wages[1] + matricesC[5][i][j] * wages[1] * wages[2] +
-                            matricesC[6][i][j] * wages[2] * wages[0] + matricesC[7][i][j] * wages[2] * wages[1] +
-                            matricesC[8][i][j] * wages[2] * wages[2]);
+                    matrixC[i][j] += specificHeat * density * (detJ[0] * matricesC[0][i][j] * wages[0] * wages[0] +
+                            detJ[1] * matricesC[1][i][j] * wages[0] * wages[1] + detJ[2] *
+                            matricesC[2][i][j] * wages[0] * wages[2] + detJ[3] * matricesC[3][i][j] *
+                            wages[1] * wages[0] + detJ[4] * matricesC[4][i][j] * wages[1] * wages[1] +
+                            detJ[5] * matricesC[5][i][j] * wages[1] * wages[2] +
+                            detJ[6] * matricesC[6][i][j] * wages[2] * wages[0] +
+                            detJ[7] * matricesC[7][i][j] * wages[2] * wages[1] +
+                            detJ[8] * matricesC[8][i][j] * wages[2] * wages[2]);
                 }
                 if (points == 4) {
-                    matrixC[i][j] = specificHeat * density * detJ[i] * (matricesC[0][i][j] * wages[0] * wages[0] + matricesC[1][i][j] * wages[0] * wages[1] +
-                            matricesC[2][i][j] * wages[0] * wages[2] + matricesC[3][i][j] * wages[0] * wages[3] +
-                            matricesC[4][i][j] * wages[1] * wages[0] + matricesC[5][i][j] * wages[1] * wages[1] +
-                            matricesC[6][i][j] * wages[1] * wages[2] + matricesC[7][i][j] * wages[1] * wages[3] +
-                            matricesC[8][i][j] * wages[2] * wages[0] + matricesC[9][i][j] * wages[2] * wages[1] +
-                            matricesC[10][i][j] * wages[2] * wages[2] + matricesC[11][i][j] * wages[2] * wages[3] +
-                            matricesC[12][i][j] * wages[3] * wages[0] + matricesC[13][i][j] * wages[3] * wages[1] +
-                            matricesC[14][i][j] * wages[3] * wages[2] + matricesC[15][i][j] * wages[3] * wages[3]);
+                    matrixC[i][j] = specificHeat * density * (detJ[0] * matricesC[0][i][j] * wages[0] *
+                            wages[0] + detJ[1] * matricesC[1][i][j] * wages[0] * wages[1] +
+                            detJ[2] * matricesC[2][i][j] * wages[0] * wages[2] +
+                            detJ[3] * matricesC[3][i][j] * wages[0] * wages[3] +
+                            detJ[4] * matricesC[4][i][j] * wages[1] * wages[0] +
+                            detJ[5] * matricesC[5][i][j] * wages[1] * wages[1] +
+                            detJ[6] * matricesC[6][i][j] * wages[1] * wages[2] +
+                            detJ[7] * matricesC[7][i][j] * wages[1] * wages[3] +
+                            detJ[8] * matricesC[8][i][j] * wages[2] * wages[0] +
+                            detJ[9] * matricesC[9][i][j] * wages[2] * wages[1] +
+                            detJ[10] * matricesC[10][i][j] * wages[2] * wages[2] +
+                            detJ[11] * matricesC[11][i][j] * wages[2] * wages[3] +
+                            detJ[12] * matricesC[12][i][j] * wages[3] * wages[0] +
+                            detJ[13] * matricesC[13][i][j] * wages[3] * wages[1] +
+                            detJ[14] * matricesC[14][i][j] * wages[3] * wages[2] +
+                            detJ[15] * matricesC[15][i][j] * wages[3] * wages[3]);
                 }
             }
         }

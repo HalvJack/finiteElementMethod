@@ -7,7 +7,8 @@ import static java.lang.Math.sqrt;
 public abstract class MatrixMES {
     double[] x = new double[4];
     double[] y = new double[4];
-    double alfa = 0;
+    double alfa;
+    double conductivity;
     double density;
     double specificHeat;
     double[] eta2 = {-1 / sqrt(3), -1 / sqrt(3), 1 / sqrt(3), 1 / sqrt(3)};
