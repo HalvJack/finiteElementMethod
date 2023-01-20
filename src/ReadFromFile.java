@@ -20,7 +20,7 @@ public class ReadFromFile {
         int choice;
         try {
             //choice = scanner.nextInt();
-            choice = 2; // na razie na sztywno
+            choice = 3; // na razie na sztywno
             switch (choice) {
                 case 1 -> readFile(new File("Test1_4_4.txt"));
                 case 2 -> readFile(new File("Test2_4_4_MixGrid.txt"));
