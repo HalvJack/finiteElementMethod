@@ -81,7 +81,7 @@ public class MatrixH extends MatrixMES {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < 4; j++) {
                 tableDx[i][j] = matrixFirstReversedJakobian[i][0] * tableEta[i][j] + matrixFirstReversedJakobian[i][1] * tableKsi[i][j]; //slajd 13, tabelka z dx
-                tableDy[i][j] = matrixFirstReversedJakobian[i][1] * tableEta[i][j] + matrixFirstReversedJakobian[i][0] * tableKsi[i][j]; //slajd 13, tabelka z dy
+                tableDy[i][j] = matrixFirstReversedJakobian[i][2] * tableEta[i][j] + matrixFirstReversedJakobian[i][3] * tableKsi[i][j]; //slajd 13, tabelka z dy
                // System.out.print(i + " " + j + " " + tableDx[i][j]);
                 //System.out.print(i + " " + j + " " + tableDy[i][j]);
             }

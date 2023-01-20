@@ -14,12 +14,11 @@ public class Main {
         double[][] vectorPList = new double[9][4];
         for (int i = 0; i < grid.nEl; i++) {
             MatrixHBC matrixHBC = new MatrixHBC(grid.getEL().get(i), globalData.getAlfa(), globalData.getTot());
-            double[] vectorPPom = new double[4];
-            vectorPPom = matrixHBC.calculateVectorP(2);
+            double[] vectorPPom = matrixHBC.calculateVectorP(4);
             for (int j = 0; j < 4; j++) {
                 vectorPList[i][j] = vectorPPom[j];
             }
-            matrixHBCpom = matrixHBC.calculateMatrixHBC(2);
+            matrixHBCpom = matrixHBC.calculateMatrixHBC(4);
             for (int m = 0; m < 4; m++) {
                 for (int j = 0; j < 4; j++) {
                     matrixHBCList[i][m][j] = matrixHBCpom[m][j];

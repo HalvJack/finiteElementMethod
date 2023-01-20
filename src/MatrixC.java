@@ -75,9 +75,10 @@ public class MatrixC extends MatrixMES {
                 }
                 if (points == 3) {
                     matrixC[i][j] += specificHeat * density * (detJ[0] * matricesC[0][i][j] * wages[0] * wages[0] +
-                            detJ[1] * matricesC[1][i][j] * wages[0] * wages[1] + detJ[2] *
-                            matricesC[2][i][j] * wages[0] * wages[2] + detJ[3] * matricesC[3][i][j] *
-                            wages[1] * wages[0] + detJ[4] * matricesC[4][i][j] * wages[1] * wages[1] +
+                            detJ[1] * matricesC[1][i][j] * wages[0] * wages[1] +
+                            detJ[2] * matricesC[2][i][j] * wages[0] * wages[2] +
+                            detJ[3] * matricesC[3][i][j] * wages[1] * wages[0] +
+                            detJ[4] * matricesC[4][i][j] * wages[1] * wages[1] +
                             detJ[5] * matricesC[5][i][j] * wages[1] * wages[2] +
                             detJ[6] * matricesC[6][i][j] * wages[2] * wages[0] +
                             detJ[7] * matricesC[7][i][j] * wages[2] * wages[1] +

@@ -66,22 +66,22 @@ public class MatrixHBC extends MatrixMES {
 
             }
             if (points == 3) {
-                table[0][1] = myShapeFunctions.get(1).apply(ksi3[3], eta3[0]);
-                table[0][2] = myShapeFunctions.get(2).apply(ksi3[3], eta3[0]);
-                table[1][1] = myShapeFunctions.get(1).apply(ksi3[3], eta3[1]);
-                table[1][2] = myShapeFunctions.get(2).apply(ksi3[3], eta3[1]);
-                table[2][1] = myShapeFunctions.get(1).apply(ksi3[3], eta3[2]);
-                table[2][2] = myShapeFunctions.get(2).apply(ksi3[3], eta3[2]);
+                table[0][1] = myShapeFunctions.get(1).apply(ksi3[4], eta3[1]);
+                table[0][2] = myShapeFunctions.get(2).apply(ksi3[4], eta3[1]);
+                table[1][1] = myShapeFunctions.get(1).apply(ksi3[4], eta3[2]);
+                table[1][2] = myShapeFunctions.get(2).apply(ksi3[4], eta3[2]);
+                table[2][1] = myShapeFunctions.get(1).apply(ksi3[4], eta3[3]);
+                table[2][2] = myShapeFunctions.get(2).apply(ksi3[4], eta3[3]);
             }
             if (points == 4) {
-                table[0][1] = myShapeFunctions.get(1).apply(ksi4[4], eta4[1]);
-                table[0][2] = myShapeFunctions.get(2).apply(ksi4[4], eta4[1]);
-                table[1][1] = myShapeFunctions.get(1).apply(ksi4[4], eta4[2]);
-                table[1][2] = myShapeFunctions.get(2).apply(ksi4[4], eta4[2]);
-                table[2][1] = myShapeFunctions.get(1).apply(ksi4[4], eta4[3]);
-                table[2][2] = myShapeFunctions.get(2).apply(ksi4[4], eta4[3]);
-                table[3][1] = myShapeFunctions.get(1).apply(ksi4[4], eta4[4]);
-                table[3][2] = myShapeFunctions.get(2).apply(ksi4[4], eta4[4]);
+                table[0][1] = myShapeFunctions.get(1).apply(ksi4[5], eta4[1]);
+                table[0][2] = myShapeFunctions.get(2).apply(ksi4[5], eta4[1]);
+                table[1][1] = myShapeFunctions.get(1).apply(ksi4[5], eta4[2]);
+                table[1][2] = myShapeFunctions.get(2).apply(ksi4[5], eta4[2]);
+                table[2][1] = myShapeFunctions.get(1).apply(ksi4[5], eta4[3]);
+                table[2][2] = myShapeFunctions.get(2).apply(ksi4[5], eta4[3]);
+                table[3][1] = myShapeFunctions.get(1).apply(ksi4[5], eta4[4]);
+                table[3][2] = myShapeFunctions.get(2).apply(ksi4[5], eta4[4]);
             }
         }
         if (whichSide == 2) {
@@ -93,23 +93,23 @@ public class MatrixHBC extends MatrixMES {
 
             }
             if (points == 3) {
-                table[0][2] = myShapeFunctions.get(2).apply(ksi2[1], eta2[3]);
-                table[0][3] = myShapeFunctions.get(3).apply(ksi2[1], eta2[3]);
-                table[1][2] = myShapeFunctions.get(2).apply(ksi2[2], eta2[3]);
-                table[1][3] = myShapeFunctions.get(3).apply(ksi2[2], eta2[3]);
-                table[2][2] = myShapeFunctions.get(2).apply(ksi3[3], eta3[3]);
-                table[2][3] = myShapeFunctions.get(3).apply(ksi3[3], eta3[3]);
+                table[0][2] = myShapeFunctions.get(2).apply(ksi3[1], eta3[4]);
+                table[0][3] = myShapeFunctions.get(3).apply(ksi3[1], eta3[4]);
+                table[1][2] = myShapeFunctions.get(2).apply(ksi3[2], eta3[4]);
+                table[1][3] = myShapeFunctions.get(3).apply(ksi3[2], eta3[4]);
+                table[2][2] = myShapeFunctions.get(2).apply(ksi3[3], eta3[4]);
+                table[2][3] = myShapeFunctions.get(3).apply(ksi3[3], eta3[4]);
 
             }
             if (points == 4) {
-                table[0][2] = myShapeFunctions.get(2).apply(ksi4[1], eta4[4]);
-                table[0][3] = myShapeFunctions.get(3).apply(ksi4[1], eta4[4]);
-                table[1][2] = myShapeFunctions.get(2).apply(ksi4[2], eta4[4]);
-                table[1][3] = myShapeFunctions.get(3).apply(ksi4[2], eta4[4]);
-                table[2][2] = myShapeFunctions.get(2).apply(ksi4[3], eta4[4]);
-                table[2][3] = myShapeFunctions.get(3).apply(ksi4[3], eta4[4]);
-                table[3][2] = myShapeFunctions.get(2).apply(ksi4[4], eta4[4]);
-                table[3][3] = myShapeFunctions.get(3).apply(ksi4[4], eta4[4]);
+                table[0][2] = myShapeFunctions.get(2).apply(ksi4[1], eta4[5]);
+                table[0][3] = myShapeFunctions.get(3).apply(ksi4[1], eta4[5]);
+                table[1][2] = myShapeFunctions.get(2).apply(ksi4[2], eta4[5]);
+                table[1][3] = myShapeFunctions.get(3).apply(ksi4[2], eta4[5]);
+                table[2][2] = myShapeFunctions.get(2).apply(ksi4[3], eta4[5]);
+                table[2][3] = myShapeFunctions.get(3).apply(ksi4[3], eta4[5]);
+                table[3][2] = myShapeFunctions.get(2).apply(ksi4[4], eta4[5]);
+                table[3][3] = myShapeFunctions.get(3).apply(ksi4[4], eta4[5]);
             }
 
         }
@@ -158,8 +158,7 @@ public class MatrixHBC extends MatrixMES {
         for (int i = 0; i < element.getSides().size(); i++) {
             //System.out.println("Ktora sciana : " + i);
             if (element.getSides().get(i).isSideBorderCondition()) {
-                double[][] tableKsiEta = new double[points][4];
-                tableKsiEta = showTableOneSide(points, i);
+                double[][] tableKsiEta = showTableOneSide(points, i);
                 double detJ;
                 detJ = calculateDetJ(element.getSides().get(i).getNodeA(), element.getSides().get(i).getNodeB());
                 for (int j = 0; j < 4; j++) {
@@ -168,7 +167,7 @@ public class MatrixHBC extends MatrixMES {
                                 wages2[1] * tableKsiEta[1][j]);
                     }
                     if (points == 3) {
-                        vectorP[i][j] += alfa * detJ * tot * (wages3[0] * tableKsiEta[0][j] +
+                        vectorP[i][j] = alfa * detJ * tot * (wages3[0] * tableKsiEta[0][j] +
                                 wages3[1] * tableKsiEta[1][j] +
                                 wages3[2] * tableKsiEta[2][j]);
                     }
@@ -179,14 +178,6 @@ public class MatrixHBC extends MatrixMES {
                                 wages4[3] * tableKsiEta[3][j]);
                     }
                     //System.out.print(vectorP[i][j] + " Vector P ");
-                }
-                //System.out.println();
-
-
-            } else {
-                for (int j = 0; j < 4; j++) {
-                    vectorP[i][j] = 0;
-                    //System.out.print(vectorP[i][j]);
                 }
                 //System.out.println();
             }
