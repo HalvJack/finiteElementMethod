@@ -21,7 +21,7 @@ public abstract class MatrixMES {
     double[] wages3 = {5.0 / 9.0, 8.0 / 9.0, 5.0 / 9.0};
     double[] wages4 = {0.347855, 0.652145, 0.652145, 0.347855};
 
-    List<Function<Double, Double>> myFunctionsKsi = new ArrayList<>() { // ksi, ma byc tablica ksi
+    List<Function<Double, Double>> myFunctionsKsi = new ArrayList<>() {
         {
             add(aDouble -> 0.25 * (aDouble - 1));
             add(aDouble -> 0.25 * (-1 - aDouble));
@@ -29,7 +29,7 @@ public abstract class MatrixMES {
             add(aDouble -> 0.25 * (1 - aDouble));
         }
     };
-    List<Function<Double, Double>> myFunctionsEta = new ArrayList<>() { // Eta, w sensie tez ma byc tablica eta
+    List<Function<Double, Double>> myFunctionsEta = new ArrayList<>() {
         {
             add(aDouble -> 0.25 * (aDouble - 1));
             add(aDouble -> 0.25 * (1 - aDouble));

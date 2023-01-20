@@ -15,7 +15,7 @@ public class MatrixHBC extends MatrixMES {
     double tot;
     double alfa;
     double[] eta2 = {-1, -1 / sqrt(3), 1 / sqrt(3), 1};
-    double[] ksi2 = {-1, -1 / sqrt(3), 1 / sqrt(3), 1}; // ksi to E
+    double[] ksi2 = {-1, -1 / sqrt(3), 1 / sqrt(3), 1};
     double[] eta3 = {-1, -sqrt(3.0 / 5), 0, sqrt(3.0 / 5), 1};
     double[] ksi3 = {-1, -sqrt(3.0 / 5), 0, sqrt(3.0 / 5), 1};
     double[] eta4 = {-1, -0.861136, -0.339981, 0.339981, 0.861136, 1};

@@ -96,12 +96,9 @@ public class Aggregation {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
                     aggreagatedMatrixC[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += myLIstOfMatricesC[i][j][k];
-                    //matrixHplusHBC[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += myLIstOfMatricesC[i][j][k] + matrixHBCList[i][j][k];
                 }
             }
         }
-        //writeH(matrixHList);
-        //writeVectorPList(vectorPList);
         for (int i = 0; i < grid.getnEl(); i++) {
             for (int j = 0; j < 4; j++) {
                 aggregatedVectorP[grid.getEL().get(i).getID().get(j) - 1] += vectorPList[i][j];
@@ -110,7 +107,7 @@ public class Aggregation {
         for (int i = 0; i < grid.getnEl(); i++) {
             for (int j = 0; j < 4; j++) {
                 for (int k = 0; k < 4; k++) {
-                    //aggregatedMatrixH[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += matrixHList[i][j][k];
+                    aggregatedMatrixH[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += matrixHList[i][j][k];
                     matrixHList[i][j][k] += matrixHBCList[i][j][k];
                     aggregatedMatrix[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += matrixHList[i][j][k];
                     aggregatedMatrixHBC[grid.getEL().get(i).getID().get(j) - 1][grid.getEL().get(i).getID().get(k) - 1] += matrixHBCList[i][j][k];
@@ -119,13 +116,13 @@ public class Aggregation {
         }
 
         //writeHBC(matrixHBCList);
-        //System.out.println("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-        //writeAggregatedMatrix(aggregatedMatrix);
+       // writeAggregatedMatrix(aggregatedMatrix);
         //writeVectorP(aggregatedVectorP);
         //writeAggregatedHplusHBC(matrixHList);
         //writeAggregatedMatrixC(aggreagatedMatrixC);
         //writeAggregatedMatrixHBC(aggregatedMatrixHBC);
         //writeAggregatedMatrixHBC(aggregatedMatrixH);
+        System.out.println();
         for (int i = 0; i < grid.getnNd(); i++) {
             for (int j = 0; j < grid.getnNd(); j++) {
                 aggregatedMatrix[i][j] += aggreagatedMatrixC[i][j] / globalData.getSimulationStepTime();
@@ -154,11 +151,11 @@ public class Aggregation {
             temperatureVector = GaussianElimination.lsolve(aggregatedMatrix, aggregatedVectorP);
             double min = Arrays.stream(temperatureVector).summaryStatistics().getMin();
             double max = Arrays.stream(temperatureVector).summaryStatistics().getMax();
-            System.out.println("Minimum " + min);
-            System.out.println("Maksimum " + max);
-            for (int j = 0; j < temperatureVector.length; j++) {
+            int q = i+50;
+            System.out.println("Time " + q + " Minimum " + min + " Maksimum " + max);
+            /*for (int j = 0; j < temperatureVector.length; j++) {
                 System.out.print(temperatureVector[j] + " ");
-            }
+            }*/
             System.out.println();
             for (int j = 0; j < aggregatedVectorP.length; j++) {
                 aggregatedVectorP[j] = globalVectorPCopy[j];
@@ -182,7 +179,7 @@ public class Aggregation {
     }
 
     private void writeAggregatedMatrixC(double[][] aggreagatedMatrixC) {
-        System.out.println("MACIERZ C ZAGREAGOWANA!!!!!!");
+        System.out.println("MACIERZ C ZAGREAGOWANA");
         for (int i = 0; i < grid.getnNd(); i++) {
             for (int j = 0; j < grid.getnNd(); j++) {
                 System.out.print(aggreagatedMatrixC[i][j] + " ");
